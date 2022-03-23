@@ -1,0 +1,51 @@
+<?php
+$_fp = fopen("php://stdin", "r");
+/* Read input from STDIN. Print output to STDOUT */
+
+$n =0;
+$arr = array();
+$val = "";
+$searchVal = array();
+$phoneBook = array();
+
+// Getting first line constrains an integer
+$n = intval(trim(fgets(STDIN)));
+
+// getting name and phone number and store in array
+for($i=0;$i<$n;$i++){
+    $arr[] = trim(fgets(STDIN));
+}
+
+// getting search data:name
+for($k=0;$k<$n;$k++){
+    $searchVal[] = trim(fgets(STDIN));
+}
+
+//making phone book data into associative array
+foreach($arr as $value){
+
+    $phoneBook[] = explode(" ",$value);    
+}
+
+for($j=0;$j<$n;$j++){
+    $key = search($searchVal[$j],$n,$phoneBook);
+    
+    // ifelse condition used to print Name with phone number if exists or not
+    
+    if(isset($key)){
+        echo $phoneBook[$key][0]."=".$phoneBook[$key][1]."\n";
+    }else{
+        echo "Not found \n";
+    }
+}
+//searching name from phone book array. In success return array_index_value
+function search($srch,$n,$phoneBook)
+{
+    for($m=0;$m<$n;$m++){
+        if($phoneBook[$m][0] == $srch){
+            return $m;
+        }
+    }
+}
+
+?>
